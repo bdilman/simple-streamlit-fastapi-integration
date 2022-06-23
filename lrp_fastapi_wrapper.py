@@ -3,10 +3,11 @@ Contains the main `FastAPI_Wrapper` class, which wraps `FastAPI`.
 """
 import os
 
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-CORS_ALLOW_ORIGINS=['http://localhost, http://localhost:4010, http://localhost:8765']
+CORS_ALLOW_ORIGINS=['http://localhost, http://localhost:4010, http://localhost:8765, http://localhost:8502'] # http://jedscene-env.eba-qrbhqiku.us-east-2.elasticbeanstalk.com/
 
 class FastAPI_Wrapper(FastAPI):
 

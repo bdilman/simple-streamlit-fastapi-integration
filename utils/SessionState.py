@@ -1,8 +1,9 @@
 import streamlit as st
-from streamlit.hashing import _CodeHasher
-
+# from streamlit.hashing import _CodeHasher
+from streamlit.legacy_caching.hashing import _CodeHasher
 # After Streamlit 0.65
-from streamlit.report_thread import get_report_ctx
+
+from streamlit.scriptrunner import get_script_run_ctx as get_report_ctx
 from streamlit.server.server import Server
 
 class SessionState:

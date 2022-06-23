@@ -7,7 +7,8 @@ import requests
 
 API_HOST='localhost'
 API_PORT=8000
-API_BASE_URL='http://localhost:8000'
+# API_BASE_URL='http://localhost:8502'
+API_BASE_URL='http://localhost:8501'
 
 from utils import SessionState
 # Session State variables:
@@ -31,12 +32,21 @@ def main():
             import threading
 
             def run(job):
-                print (f"\nRunning job: {job}\n")
+                print ("\nRunning job: {job}\n")
                 proc = subprocess.Popen(job)
                 proc.wait()
                 return proc
+            
+            #### add new job to install dependent modules??
+            
+            # job = ['pip install -r requirements.txt'], API_HOST, str(API_PORT)]
 
-            job = ['python', os.path.join('./', 'lrp_bootstrapper.py'), API_HOST, str(API_PORT)]
+            # server thread will remain active as long as streamlit thread is running, or is manually shutdown
+            # thread = threading.Thread(name='FastAPI-LRP-Bootstrapper', target=run, args=(job,), daemon=True)
+            # thread.start()
+
+
+            job = ['python3', os.path.join('./', 'lrp_bootstrapper.py'), API_HOST, str(API_PORT)]
 
             # server thread will remain active as long as streamlit thread is running, or is manually shutdown
             thread = threading.Thread(name='FastAPI-LRP-Bootstrapper', target=run, args=(job,), daemon=True)
@@ -45,7 +55,12 @@ def main():
             time.sleep(2)
 
             # !! Start the LRP !!
-            requests.get(f'{API_BASE_URL}/run')
+            # os.environ['NO_PROXY'] = '127.0.0.1'
+            # r = requests.get('http://127.0.0.1:5000')
+            # requests.get('http://127.0.0.1:5000')
+            requests.get(f'{API_BASE_URL}/shutdown')
+
+            # requests.get('http://localhost:8502/run')
 
             state.API_STARTED = True
 
